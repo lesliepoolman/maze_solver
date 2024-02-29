@@ -6,7 +6,7 @@ class Window:
         self.__root_widget.title('Funtastic Maze')
         self.__canvas = Canvas(self.__root_widget, bg="grey", height=height, width=width)
         self.__window_running = False
-        self.__canvas.pack()
+        self.__canvas.pack(fill=BOTH, expand=1)
         self.__root_widget.protocol("WM_DELETE_WINDOW", self.close)
 
     def redraw(self):
@@ -39,4 +39,4 @@ class Line:
         canvas.create_line(
             self.__point_x.x, self.__point_y.x, self.__point_x.y, self.__point_y.y, fill=colour, width=2
         )
-        canvas.pack()
+        canvas.pack(fill=BOTH, expand=1)
