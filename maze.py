@@ -17,6 +17,7 @@ class Maze:
             random.seed(self.__seed)
         self.__create_cells()
         self.__break_walls_r(0, 0)
+        self.__reset_cells_visited()
         self.__break_entrance_and_exit()
 
     def __create_cells(self):
@@ -93,3 +94,8 @@ class Maze:
                 cell_to_connect.has_top_wall = False
                 self.__draw_cell(rand_dir[0], rand_dir[1])
             self.__break_walls_r(rand_dir[0], rand_dir[1])
+    
+    def __reset_cells_visited(self):
+        for col in range(self.__num_cols):
+            for row in range(self.__num_rows):
+                self._cells[col][row].visited = False
