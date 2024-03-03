@@ -2,8 +2,8 @@ from cell import *
 import time
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win,):
-        self.__cells = []
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
+        self._cells = []
         self.__x1 = x1
         self.__y1 = y1
         self.__num_rows = num_rows
@@ -18,7 +18,7 @@ class Maze:
             cell_col = []
             for row in range(self.__num_rows):
                 cell_col.append(Cell(self.__win))
-            self.__cells.append(cell_col)
+            self._cells.append(cell_col)
         for col in range(self.__num_cols):
             for row in range(self.__num_rows):
                 self.__draw_cell(col, row)
@@ -28,9 +28,11 @@ class Maze:
         tly = self.__y1+(self.__cell_size_y * row)
         top_left = Point(tlx, tly)
         btm_right = Point(tlx+self.__cell_size_x, tly+self.__cell_size_y)
-        self.__cells[col][row].draw(top_left, btm_right)
+        self._cells[col][row].draw(top_left, btm_right)
         self.__animate()
 
     def __animate(self):
+        if self.__win is None:
+            return
         self.__win.redraw()
         time.sleep(0.05)
