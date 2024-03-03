@@ -1,11 +1,12 @@
 from graphics import Line, Point
 
 class Cell:
-    def __init__(self, win=None, l_wall=True, r_wall=True, t_wall=True, b_wall=True):
+    def __init__(self, win=None, l_wall=True, r_wall=True, t_wall=True, b_wall=True, visited=False):
         self.has_left_wall = l_wall
         self.has_right_wall = r_wall
         self.has_top_wall = t_wall
         self.has_bottom_wall = b_wall
+        self.visited = visited
         self.__win = win
         self.__x1 = None
         self.__x2 = None
