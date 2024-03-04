@@ -42,7 +42,7 @@ class Maze:
         if self.__win is None:
             return
         self.__win.redraw()
-        time.sleep(0.005)
+        time.sleep(0.01)
 
     def __break_entrance_and_exit(self):
         self._cells[0][0].has_top_wall = False
@@ -54,20 +54,7 @@ class Maze:
         current = self._cells[col][row]
         current.visited = True
         while True:
-            to_visit = []
-
-            if col-1 in range(self.__num_cols):
-                to_visit.append([col-1, row])
-            if col+1 in range(self.__num_cols):
-                to_visit.append([col+1, row])
-            if row-1 in range(self.__num_rows):
-                to_visit.append([col, row-1])
-            if row+1 in range(self.__num_rows):
-                to_visit.append([col, row+1])
-            poss_dirs = []
-            for idxs in to_visit:
-                if self._cells[idxs[0]][idxs[1]].visited is False:
-                    poss_dirs.append(idxs)
+            poss_dirs = self.__neighbours(col, row)
             if len(poss_dirs) == 0:
                 self.__draw_cell(col, row)
                 return
@@ -99,3 +86,58 @@ class Maze:
         for col in range(self.__num_cols):
             for row in range(self.__num_rows):
                 self._cells[col][row].visited = False
+
+    def solve(self):
+        return self.__solve_r(0, 0)
+    
+    def __solve_r(self, col, row):
+        self.__animate()
+        current = self._cells[col][row]
+        current.visited = True
+        if col == (self.__num_cols - 1) and row == (self.__num_rows - 1):
+            return True
+        for neighbour in self.__neighbours(col, row):
+            neighbour_cell = self._cells[neighbour[0]][neighbour[1]]
+            if neighbour[0] < col and current.has_left_wall is False and neighbour_cell.has_right_wall is False:
+                current.draw_move(neighbour_cell)
+                if self.__solve_r(neighbour[0], neighbour[1]):
+                    return True
+                else:
+                    current.draw_move(neighbour_cell, undo=True)
+            elif neighbour[0] > col and current.has_right_wall is False and neighbour_cell.has_left_wall is False:
+                current.draw_move(neighbour_cell)
+                if self.__solve_r(neighbour[0], neighbour[1]):
+                    return True
+                else:
+                    current.draw_move(neighbour_cell, undo=True)
+            elif neighbour[1] < row and current.has_top_wall is False and neighbour_cell.has_bottom_wall is False:
+                current.draw_move(neighbour_cell)
+                if self.__solve_r(neighbour[0], neighbour[1]):
+                    return True
+                else:
+                    current.draw_move(neighbour_cell, undo=True)
+            elif neighbour[1] > row and current.has_bottom_wall is False and neighbour_cell.has_top_wall is False:
+                current.draw_move(neighbour_cell)
+                if self.__solve_r(neighbour[0], neighbour[1]):
+                    return True
+                else:
+                    current.draw_move(neighbour_cell, undo=True)
+        return False
+
+    def __neighbours(self, col, row):
+        to_visit = []
+        if col-1 in range(self.__num_cols):
+            to_visit.append([col-1, row])
+        if col+1 in range(self.__num_cols):
+            to_visit.append([col+1, row])
+        if row-1 in range(self.__num_rows):
+            to_visit.append([col, row-1])
+        if row+1 in range(self.__num_rows):
+            to_visit.append([col, row+1])
+        poss_dirs = []
+        for idxs in to_visit:
+            if self._cells[idxs[0]][idxs[1]].visited is False:
+                poss_dirs.append(idxs)
+        return poss_dirs
+
+
