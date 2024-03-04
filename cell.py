@@ -52,11 +52,11 @@ class Cell:
             self.__win.draw_line(line, "grey")
 
     
-    def draw_move(self, to_cell, undo=False, colour="green"):
+    def draw_move(self, to_cell, undo=False, colour="orange"):
         if self.__win is None:
             return
         if undo:
-            colour = "orange"
+            colour = "purple"
 
         s_mid_y = (self.__y1 + self.__y2) / 2
         s_mid_x = (self.__x1 + self.__x2) / 2
