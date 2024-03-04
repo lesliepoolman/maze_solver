@@ -65,17 +65,17 @@ class Maze:
                 self.__draw_cell(col, row)
                 cell_to_connect.has_right_wall = False
                 self.__draw_cell(rand_dir[0], rand_dir[1])
-            elif rand_dir[0] > col:
+            if rand_dir[0] > col:
                 current.has_right_wall = False
                 self.__draw_cell(col, row)
                 cell_to_connect.has_left_wall = False
                 self.__draw_cell(rand_dir[0], rand_dir[1])
-            elif rand_dir[1] < row:
+            if rand_dir[1] < row:
                 current.has_top_wall = False
                 self.__draw_cell(col, row)
                 cell_to_connect.has_bottom_wall = False
                 self.__draw_cell(rand_dir[0], rand_dir[1])
-            elif rand_dir[1] > row:
+            if rand_dir[1] > row:
                 current.has_bottom_wall = False
                 self.__draw_cell(col, row)
                 cell_to_connect.has_top_wall = False
@@ -104,19 +104,19 @@ class Maze:
                     return True
                 else:
                     current.draw_move(neighbour_cell, undo=True)
-            elif neighbour[0] > col and current.has_right_wall is False and neighbour_cell.has_left_wall is False:
+            if neighbour[0] > col and current.has_right_wall is False and neighbour_cell.has_left_wall is False:
                 current.draw_move(neighbour_cell)
                 if self.__solve_r(neighbour[0], neighbour[1]):
                     return True
                 else:
                     current.draw_move(neighbour_cell, undo=True)
-            elif neighbour[1] < row and current.has_top_wall is False and neighbour_cell.has_bottom_wall is False:
+            if neighbour[1] < row and current.has_top_wall is False and neighbour_cell.has_bottom_wall is False:
                 current.draw_move(neighbour_cell)
                 if self.__solve_r(neighbour[0], neighbour[1]):
                     return True
                 else:
                     current.draw_move(neighbour_cell, undo=True)
-            elif neighbour[1] > row and current.has_bottom_wall is False and neighbour_cell.has_top_wall is False:
+            if neighbour[1] > row and current.has_bottom_wall is False and neighbour_cell.has_top_wall is False:
                 current.draw_move(neighbour_cell)
                 if self.__solve_r(neighbour[0], neighbour[1]):
                     return True
